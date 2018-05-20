@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--Load the properties file-->
+    <context:property-placeholder location="classpath:sports.properties"/>
+
+    <bean id="happyFortuneService" class="com.kinath.coachapp.services.HappyFortuneService"/>
+    <bean id="randomFortuneService" class="com.kinath.coachapp.services.RandomFortune"/>
+
+    <bean id="myCoach" class="com.kinath.coachapp.coach.BaseballCoach">
+        <constructor-arg ref="happyFortuneService"/>
+    </bean>
+
+    <bean id="cricketCoach" class="com.kinath.coachapp.coach.CricketCoach">
+        <property name="fortuneService" ref="randomFortuneService"/>
+        <property name="teamName" value="${cricket.team}"/>
+        <property name="emailAddress" value="${cricket.email}"/>
+    </bean>
+</beans>
